@@ -18,8 +18,13 @@ io.on('connect', (socket)=> {
 
     socket.broadcast.emit('message', 'A new user has joined')
 
-    socket.on('sendMessage', (message) => {
+    socket.on('sendMessage', (message, callback) => {
         io.emit('message', message)
+        callback("Delivered")
+    })
+
+    socket.on('sendLocation', (coords) => {
+        socket.broadcast.emit('message', `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
     })
 
     // socket.on('increment', () => {
